@@ -43,7 +43,6 @@ async function getFeed(req, res) {
 async function viewConnections(req, res) {
   try {
     const loggedInUser = req.user;
-    console.log(loggedInUser);
     const connectionRequests = await ConnectionRequest.find({
       $or: [
         { toUserId: loggedInUser._id, status: "accepted" },
@@ -84,4 +83,22 @@ async function viewReceivedRequests(req,res){
   }
 }
 
-module.exports = { getFeed, viewConnections, viewReceivedRequests }
+//Requests sent-API
+async function viewSentRequests(req,res){
+  try {
+    const loggedInUser = req.user;
+    const connectionRequests = await ConnectionRequest.find({
+      fromUserId: loggedInUser._id,
+      status: "interested",
+    }).populate("toUserId", USER_SAFE_DATA).select(USER_SAFE_DATA)
+    if (connectionRequests) {
+      return res.status(200).json({
+        connectionRequests,
+      });
+    }
+  } catch (error) {
+    res.status(400).send("ERROR:" + error.message);
+  }
+}
+
+module.exports = { getFeed, viewConnections, viewReceivedRequests, viewSentRequests }

@@ -35,7 +35,6 @@ async function sendRequest(req, res) {
             fromUserId,
             status
         })
-        console.log(connnectionData)
         await connnectionData.save()
 
         return res.status(200).json({

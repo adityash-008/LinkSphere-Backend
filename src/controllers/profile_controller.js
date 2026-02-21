@@ -40,7 +40,6 @@ async function changeUserPassword(req,res){
         const isPasswordValid = await user.validatePassword(oldPassword)
         if(!isPasswordValid) throw new Error("Enter Correct Password")
 
-        console.log(newPassword)
         const passwordHash = await bcrypt.hash(newPassword,10);
         
         await user.updateOne({password: passwordHash});
