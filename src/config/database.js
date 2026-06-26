@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const dbConnect = async () => {
     try {
         await mongoose.connect(
-            'mongodb://127.0.0.1:27017/namasteNodeJS'
+            process.env.DB_CONNECTION_STRING
         )
     } catch(err) {
         console.error("DB Connection Error:", err.message)

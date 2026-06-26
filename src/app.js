@@ -2,6 +2,10 @@ const express = require("express");
 const dbConnect = require('./config/database');
 const cookieParser = require('cookie-parser');
 const cors = require('cors')
+const http = require('http')
+const intializeSocket = require('./utils/socket.js')
+
+require('dotenv').config()
 
 const app = express();
 
@@ -10,6 +14,7 @@ const authRouter = require('./routes/auth_router.js')
 const profileRouter = require('./routes/profile_router.js')
 const requestRouter = require('./routes/request_router.js')
 const userRouter = require('./routes/user_router.js');
+const chatRouter = require('./routes/chat_router.js')
 
 
 //Middlewares
@@ -30,17 +35,23 @@ app.use('/profile',profileRouter)
 //Handle all /request routes
 app.use('/request',requestRouter)
 
+//Handle all /chat routes
+app.use('/chat', chatRouter)
+
 //Handle user feed,connections,request received
 app.use('/',userRouter)
+
+const server = http.createServer(app);
+
+intializeSocket(server);
 
 dbConnect()
     .then(() => {
         console.log("Database Connected Successfully!");
-        app.listen(7777, () => {
+        server.listen(process.env.PORT, () => {
             console.log("listening on port No. 7777...")
         })
     })
     .catch((err) => {
         console.log("Database Connection Failed",err)
     })
-

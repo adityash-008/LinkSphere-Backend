@@ -1,4 +1,4 @@
-# DevTinder APIs
+# LinkSphere APIs
 
 ## authRouter
 - POST /signup ->DONE
