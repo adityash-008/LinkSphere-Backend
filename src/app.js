@@ -49,7 +49,7 @@ dbConnect()
     .then(() => {
         console.log("Database Connected Successfully!");
         server.listen(process.env.PORT, () => {
-            console.log("listening on port No. 7777...")
+            console.log(`Server is listening on port ${process.env.PORT}`);
         })
     })
     .catch((err) => {
