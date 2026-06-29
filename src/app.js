@@ -19,8 +19,11 @@ const chatRouter = require('./routes/chat_router.js')
 
 //Middlewares
 app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
+    origin: [
+        "http://localhost:5173",
+        "https://linksphere-frontend-by5g.onrender.com"
+    ],
+    credentials: true
 }));
 
 app.use(cookieParser()) // Parse the req.cookies -> readable format
